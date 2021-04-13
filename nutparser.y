@@ -28,6 +28,7 @@ int echo_cmd(char *param);
 int cat_cmd(char *param);
 int mk_dir(char *file);
 int rm_dir(char *file);
+int runCatchAll();
 
 
 %}
@@ -58,6 +59,7 @@ cmd_line    :
 	| UNSETENV STRING END 			{runUnsetEnv($2); return 1;}
 	| EXP STRING END                {runEnvVarExpansion($2); return 1;}
 	| PRINTENV END					{runPrintEnv(); return 1;}
+	| STRING END					{ runCatchAll(); return 1;}
 	| PRINTVAR END 					{printVarTable(); return 1;}
 
     
@@ -66,11 +68,12 @@ cmd_line    :
 int yyerror(char *s) {
   printf("%s\n",s);
   return 0;
-  }
+ }
 
-int nonbuilt (char *function, char *name)
-{
-	printf("%s\n%s",function,name);
+int runCatchAll() {
+	printf("Command not found\n");
+
+	return 1;
 }
 
 int listfiles(char *param) { 
