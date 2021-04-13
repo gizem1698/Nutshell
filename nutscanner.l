@@ -57,7 +57,7 @@ printvar            { return PRINTVAR;}
 "\n"		        { return END; }
 [\"]                { BEGIN(string_condition); }
 {CHAR}+             {
-                        if (isFirstWord && isAlias(yytext)) {
+                        if (isFirstWord && ifAlias(yytext)) {
                             printf("1-yytext: %s\n", yytext);
                             char *yycopy = strdup( subAliases(yytext) );
                             for (int i = strlen(subAliases(yytext)) - 1; i >= 0; --i)
