@@ -1,0 +1,15 @@
+alias a b
+alias c d
+alias
+unalias c
+alias b c
+alias c "echo test"
+a
+unalias b
+alias
+alias b a 
+alias b c 
+alias c a 
+alias 
+ali
+bye
