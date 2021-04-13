@@ -56,16 +56,19 @@ printenv            { return PRINTENV; }
 printvar            { return PRINTVAR;}
 "\n"		        { return END; }
 [\"]                { BEGIN(string_condition); }
-{CHAR}+              {if(ifAlias(yytext)) {
-                           char *yycopy = strdup( subAliases(yytext) );
-                           for ( int i = strlen(subAliases(yytext)) - 1; i >= 0; --i )
-                               unput( yycopy[i] );
-                           free( yycopy );
-                    } else {
-                        printf("yytext: %s\n", yytext);
-                        yylval.string = strdup(yytext);
-                        return STRING;
-                    };
+{CHAR}+             {
+                        if (isFirstWord && isAlias(yytext)) {
+                            printf("1-yytext: %s\n", yytext);
+                            char *yycopy = strdup( subAliases(yytext) );
+                            for (int i = strlen(subAliases(yytext)) - 1; i >= 0; --i)
+                                     unput(yycopy[i]);
+                        
+                            free(yycopy);
+                        } else {
+                            printf("2-yytext: %s\n", yytext);
+                            yylval.string = strdup(yytext);
+                            return STRING;
+                        };                    
                     }
 
 
