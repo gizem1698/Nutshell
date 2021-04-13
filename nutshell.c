@@ -40,7 +40,7 @@ int main()
     while(1)
     {
         printf("[%s]>> ", varTable.word[2]);
-
+        isFirstWord = true;
         yyparse();
     }
 
